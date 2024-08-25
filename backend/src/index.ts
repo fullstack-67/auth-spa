@@ -25,11 +25,8 @@ app.use(passportIns.session());
 // * Endpoints
 app.get("/", async (req, res, next) => {
   const sessions = await formatSession(req);
-  res.render("pages/index", {
-    title: "Home",
-    user: req.user,
-    sessions: sessions,
-  });
+  const user = req?.user ?? null;
+  res.json({ sessions, user });
 });
 
 app.get("/signup", function (req, res) {
