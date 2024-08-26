@@ -26,7 +26,7 @@ const Nav: FC = () => {
       ) : (
         <ul>
           <li>
-            <Link to="callback/github" className="custom-icon">
+            <Link to="/signup" className="custom-icon">
               <i className="fa-solid fa-xl fa-user-plus"></i>
             </Link>
           </li>

@@ -6,7 +6,9 @@ const Home: FC = () => {
   const { user, sessions } = useAuth();
   return (
     <>
-      <h1>Home</h1>
+      <h1>
+        Home <em>(SPA)</em>
+      </h1>
       {user ? (
         <>
           <UserCard user={user} />
