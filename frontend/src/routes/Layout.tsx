@@ -1,13 +1,15 @@
 import { FC } from "react";
 import { Outlet } from "react-router-dom";
 import Nav from "../components/Nav";
+import useAuth from "../hooks/useAuth";
 const Layout: FC = () => {
+  useAuth();
   return (
     <div className="container">
-      <header>
+      <header style={{ padding: "1rem 0" }}>
         <Nav />
       </header>
-      <main>
+      <main style={{ padding: "1rem 0" }}>
         <Outlet />
       </main>
     </div>

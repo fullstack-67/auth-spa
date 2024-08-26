@@ -23,7 +23,7 @@ app.use(passportIns.initialize());
 app.use(passportIns.session());
 
 // * Endpoints
-app.get("/", async (req, res, next) => {
+app.get("/me", async (req, res, next) => {
   const sessions = await formatSession(req);
   const user = req?.user ?? null;
   res.json({ sessions, user });
@@ -95,7 +95,7 @@ app.get(
   }
 );
 
-app.post("/logout", function (req, res, next) {
+app.get("/logout", function (req, res, next) {
   // req.logout will not delete the session in db. It will generate new one for the already-logout user.
   // When the user login again, it will generate new session with the user id.
   req.logout(function (err) {
@@ -107,8 +107,7 @@ app.post("/logout", function (req, res, next) {
       if (err) {
         return next(err);
       }
-      res.setHeader("HX-Redirect", "/");
-      res.send("<div></div>");
+      res.redirect("/");
     });
   });
 });
