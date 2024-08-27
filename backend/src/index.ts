@@ -36,7 +36,7 @@ app.get("/signup", function (req, res) {
 });
 
 app.post("/signup", async function (req, res, next) {
-  console.log(req.body);
+  debug(req.body);
   const name = req.body?.name ?? "";
   const email = req.body?.email ?? "";
   const password = req.body?.password ?? "";
@@ -67,8 +67,7 @@ app.get("/login", function (req, res) {
 app.post("/login", passportIns.authenticate("local"), function (req, res) {
   debug("@login handler");
   setSessionInfoAfterLogin(req, "CREDENTIAL");
-  res.setHeader("HX-Redirect", "/");
-  res.send(`<div></div>`);
+  res.status(200).json("Login Successful");
 });
 
 app.get("/login/oauth/github", passportIns.authenticate("github"));

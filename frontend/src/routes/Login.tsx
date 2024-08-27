@@ -1,11 +1,33 @@
-import { FC } from "react";
-
+import { FC, FormEvent } from "react";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const Login: FC = () => {
+  const navigate = useNavigate();
+  const mutation = useMutation({
+    mutationFn: (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const form = e.target as HTMLFormElement;
+      const data = Object.fromEntries(new FormData(form).entries()); // https://medium.com/@hayavuk/react-forms-d49ec73cc84a
+      return axios({
+        method: "post",
+        url: "/api/login",
+        data: data,
+      });
+    },
+    onSuccess: () => {
+      navigate("/");
+    },
+    onError: (err: any) => {
+      alert(err?.response?.data ?? err?.message ?? "Unknown Error");
+    },
+  });
+
   return (
     <>
       <h1>Credential Login</h1>
       <article>
-        <form>
+        <form onSubmit={(e) => mutation.mutate(e)}>
           <input
             type="email"
             name="email"

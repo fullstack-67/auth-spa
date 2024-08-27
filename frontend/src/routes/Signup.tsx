@@ -1,10 +1,33 @@
-import { FC } from "react";
+import { FC, FormEvent } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Signup: FC = () => {
+  const navigate = useNavigate();
+  const mutation = useMutation({
+    mutationFn: (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const form = e.target as HTMLFormElement;
+      const data = Object.fromEntries(new FormData(form).entries()); // https://medium.com/@hayavuk/react-forms-d49ec73cc84a
+      return axios({
+        method: "post",
+        url: "/api/signup",
+        data: data,
+      });
+    },
+    onSuccess: () => {
+      navigate("/login");
+    },
+    onError: (err: any) => {
+      alert(err?.response?.data ?? err?.message ?? "Unknown Error");
+    },
+  });
+
   return (
     <>
       <h1>Credential Signup</h1>
-      <form action="">
+      <form onSubmit={(e) => mutation.mutate(e)}>
         <input
           type="text"
           name="name"
@@ -14,8 +37,8 @@ const Signup: FC = () => {
         />
         <input
           type="email"
-          name="name"
-          placeholder="Name"
+          name="email"
+          placeholder="Email"
           pattern=".+@.+"
           required
         />
