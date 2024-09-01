@@ -9,7 +9,7 @@ function getMe() {
 function useAuth() {
   // Queries
   const { data, error, refetch } = useQuery({
-    queryKey: ["todos"],
+    queryKey: ["auth"],
     queryFn: getMe,
     select: (dataInput) => {
       return dataInput.data;
