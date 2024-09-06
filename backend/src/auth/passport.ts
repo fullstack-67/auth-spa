@@ -4,11 +4,9 @@ import { eq } from "drizzle-orm";
 import { usersTable } from "@db/schema.js";
 import { local } from "./passportLocal.js";
 import { github } from "./passportOauthGithub.js";
-import { google } from "./passportOauthGoogle.js";
 
 passportIns.use(local);
 passportIns.use("github", github);
-passportIns.use("google", google);
 
 passportIns.serializeUser(function (user, done) {
   done(null, user.id);
